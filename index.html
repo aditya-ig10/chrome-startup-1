@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrome Startup Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: brightness(0.89) blur(1.0px);
+            z-index: -1;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .shortcuts {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .shortcut {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 150px;
+            height: 150px;
+            background-color: #1c1c1c;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .shortcut img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .shortcut:hover {
+            transform: translateY(-10px);
+        }
+
+        .search-bar {
+            position: relative;
+            width: 400px;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 70%;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 30%;
+            background-color: rgb(0, 123, 255);
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 0 25px 25px 0;
+        }
+
+        .hello-text {
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .time {
+            position: absolute;
+            top: 35px;
+            right: 20px;
+            font-size: 28px;
+        }
+
+        .quotes-container {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            color: #fff;
+            animation: fadeInOut 5s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% {
+                opacity: 0;
+            }
+            25%, 75% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-container"></div>
+    <div class="container">
+        <div class="shortcuts">
+            <div class="shortcut" onclick="window.open('https://github.com/aditya-ig10', '_blank')">
+                <img src="https://cdn-icons-png.flaticon.com/512/5968/5968866.png" alt="Github">
+            </div>
+            <div class="shortcut" onclick="window.open('https://www.youtube.com', '_blank')">
+                <img src="https://cdn-icons-png.flaticon.com/256/1384/1384060.png" alt="YouTube">
+            </div>
+            <div class="shortcut" onclick="window.open('https://chat.openai.com/', '_blank')">
+                <img src="https://static.vecteezy.com/system/resources/previews/022/227/365/non_2x/openai-chatgpt-logo-icon-free-png.png" alt="Chat GPT">
+            </div>
+            <div class="shortcut" onclick="openGoogle()">
+                <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google">
+            </div>
+            <div class="shortcut" onclick="openDLD()">
+                <img src="https://upload.wikimedia.org/wikipedia/en/f/fe/Srmseal.png" alt="DLD">
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search the web">
+            <button onclick="search()">Search</button>
+        </div>
+
+        <div class="hello-text">Hello Aditya!</div>
+
+        <div class="time" id="time"></div>
+
+        <div class="quotes-container" id="quotesContainer">
+            <p id="quoteText">This is a sample quote.</p>
+        </div>
+    </div>
+
+    <script>
+        function search() {
+            var query = document.getElementById('searchInput').value;
+            window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+        }
+
+        function updateTime() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var timeString = hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+            document.getElementById('time').innerText = timeString;
+        }
+
+        setInterval(updateTime, 60000);
+        updateTime();
+
+        function openGoogle() {
+            window.open('https://www.google.com', '_blank');
+        }
+
+        function openDLD() {
+            window.open('https://dld.srmup.in/ncretrelab2023/#/ncretrelab2023/student/home', '_blank');
+        }
+
+        var quotes = [
+            "Life is what happens when you're busy making other plans.",
+            "The only limit to our realization of tomorrow will be our doubts of today.",
+            "Believe you can and you're halfway there.",
+            "Strive not to be a success, but rather to be of value.",
+            "The only way to do great work is to love what you do.",
+            "It always seems impossible until it's done."
+        ];
+
+        function updateQuote() {
+            var randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('quoteText').innerText = quotes[randomIndex];
+        }
+
+        setInterval(updateQuote, 10000); // Change the quote every 10 seconds
+        updateQuote();
+    </script>
+</body>
+
+</html>
